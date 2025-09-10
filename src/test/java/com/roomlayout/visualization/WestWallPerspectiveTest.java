@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests that verify the west wall visualization shows the correct perspective
  * (from inside the room, not outside).
- * 
+ * <p>
  * When looking at the west wall from inside:
  * - South-West corner should appear on the LEFT side of the image
  * - North-West corner should appear on the RIGHT side of the image
@@ -85,7 +85,7 @@ class WestWallPerspectiveTest {
     }
     
     @Test
-    void testWestWallDoorPositioning() throws Exception {
+    void testWestWallDoorPositioning() {
         // Place door on west wall, centered (should appear in center of wall view)
         WallItem westDoorItem = room.placeDoor("West Door", 0.9, 2.1)
             .onWall(Wall.WEST)
