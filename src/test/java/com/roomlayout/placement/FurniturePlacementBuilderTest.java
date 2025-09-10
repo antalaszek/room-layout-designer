@@ -37,6 +37,56 @@ class FurniturePlacementBuilderTest {
     }
     
     @Test
+    void testCornerPlacementWithShiftEast() {
+        FurniturePlacementBuilder builder = new FurniturePlacementBuilder("Sofa", 2.0, 1.0, 0.8, room);
+        
+        // South West corner + shift east by 0.2
+        Furniture furniture = builder.inCorner(Corner.SOUTH_WEST).shiftEast(0.2).build();
+        
+        assertEquals(0.2, furniture.getX()); // 0.0 + 0.2 shift
+        assertEquals(3.0, furniture.getY()); // 4.0 - 1.0 (furniture length)
+    }
+    
+    @Test
+    void testCornerPlacementWithShiftNorth() {
+        FurniturePlacementBuilder builder = new FurniturePlacementBuilder("Chair", 0.8, 0.6, 0.9, room);
+        
+        // South East corner + shift north by 0.5
+        Furniture furniture = builder.inCorner(Corner.SOUTH_EAST).shiftNorth(0.5).build();
+        
+        assertEquals(5.2, furniture.getX()); // 6.0 - 0.8 (furniture width)
+        assertEquals(2.9, furniture.getY()); // 4.0 - 0.6 - 0.5 shift
+    }
+    
+    @Test
+    void testCornerPlacementWithMultipleShifts() {
+        FurniturePlacementBuilder builder = new FurniturePlacementBuilder("Table", 1.0, 0.5, 0.7, room);
+        
+        // North West corner + shift south and east
+        Furniture furniture = builder.inCorner(Corner.NORTH_WEST)
+            .shiftSouth(0.3)
+            .shiftEast(0.4)
+            .build();
+        
+        assertEquals(0.4, furniture.getX()); // 0.0 + 0.4 shift east
+        assertEquals(0.3, furniture.getY()); // 0.0 + 0.3 shift south
+    }
+    
+    @Test
+    void testCornerPlacementWithGapAndShift() {
+        FurniturePlacementBuilder builder = new FurniturePlacementBuilder("Bookshelf", 0.3, 1.8, 2.0, room);
+        
+        // North East corner with gap and shift west
+        Furniture furniture = builder.inCorner(Corner.NORTH_EAST)
+            .withGap(0.2)
+            .shiftWest(0.5)
+            .build();
+        
+        assertEquals(5.0, furniture.getX()); // 6.0 - 0.3 - 0.2 - 0.5 shift
+        assertEquals(0.2, furniture.getY()); // gap from north wall
+    }
+    
+    @Test
     void testWallPlacementCentered() {
         FurniturePlacementBuilder builder = new FurniturePlacementBuilder("TV", 1.5, 0.3, 0.6, room);
         

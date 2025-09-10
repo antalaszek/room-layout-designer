@@ -7,14 +7,22 @@ import com.roomlayout.model.Furniture;
 public final class CornerPlacementStrategy implements PlacementStrategy {
     private final Corner corner;
     private final Gap gap;
+    private final double shiftX;
+    private final double shiftY;
     
-    public CornerPlacementStrategy(Corner corner, Gap gap) {
+    public CornerPlacementStrategy(Corner corner, Gap gap, double shiftX, double shiftY) {
         this.corner = corner;
         this.gap = gap;
+        this.shiftX = shiftX;
+        this.shiftY = shiftY;
+    }
+    
+    public CornerPlacementStrategy(Corner corner, Gap gap) {
+        this(corner, gap, 0.0, 0.0);
     }
     
     public CornerPlacementStrategy(Corner corner) {
-        this(corner, Gap.NO_GAP);
+        this(corner, Gap.NO_GAP, 0.0, 0.0);
     }
     
     @Override
@@ -40,6 +48,10 @@ public final class CornerPlacementStrategy implements PlacementStrategy {
         } else {
             throw new IllegalArgumentException("Unknown corner: " + corner);
         }
+        
+        // Apply directional shifts
+        x += shiftX;
+        y += shiftY;
         
         return new Point2D(x, y);
     }

@@ -17,10 +17,10 @@ public class ImageVisualizer implements Visualizer {
     private static final int SCALE = 50;
     private static final Color WALL_COLOR = Color.BLACK;
     private static final Color FLOOR_COLOR = Color.LIGHT_GRAY;
-    private static final Color FURNITURE_COLOR = new Color(139, 69, 19);
-    private static final Color DOOR_COLOR = new Color(100, 50, 0);
-    private static final Color WINDOW_COLOR = new Color(135, 206, 235);
-    private static final Color CEILING_COLOR = new Color(245, 245, 220);
+    private static final Color FURNITURE_COLOR = new Color(255, 46, 99);
+    private static final Color DOOR_COLOR = new Color(37, 42, 52);
+    private static final Color WINDOW_COLOR = new Color(8, 217, 214);
+    private static final Color CEILING_COLOR = new Color(234, 234, 234);
 
     private final Room room;
     private final String outputDirectory;
@@ -28,7 +28,10 @@ public class ImageVisualizer implements Visualizer {
     public ImageVisualizer(Room room, String outputDirectory) {
         this.room = room;
         this.outputDirectory = outputDirectory;
-        new File(outputDirectory).mkdirs();
+        File outputDir = new File(outputDirectory);
+        outputDir.mkdirs();
+
+
     }
 
     @Override
