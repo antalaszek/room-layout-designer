@@ -1,5 +1,7 @@
 package com.roomlayout.model;
 
+import com.roomlayout.placement.FurniturePlacementBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,15 @@ public class Room {
             throw new IllegalArgumentException("Furniture doesn't fit in the room");
         }
         furniture.add(item);
+    }
+    
+    public FurniturePlacementBuilder place(String name, double width, double length, double height) {
+        return new FurniturePlacementBuilder(name, width, length, height, this);
+    }
+    
+    public Furniture placeAndAdd(String name, double width, double length, double height) {
+        FurniturePlacementBuilder builder = place(name, width, length, height);
+        return builder.inCenter().build();
     }
     
     public void addDoor(Door door) {
