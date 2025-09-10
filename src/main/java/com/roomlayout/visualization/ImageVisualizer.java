@@ -240,7 +240,15 @@ public class ImageVisualizer implements Visualizer {
     }
 
     private void drawDoorOnWall(Graphics2D g, Door d) {
-        int x = (int) (d.getPosition() * SCALE) + 20;
+        double wallWidth = (d.getWall() == Wall.NORTH || d.getWall() == Wall.SOUTH) ? room.getWidth() : room.getLength();
+        double position = d.getPosition();
+        
+        // Flip position for west wall to show from inside perspective
+        if (d.getWall() == Wall.WEST) {
+            position = wallWidth - d.getPosition() - d.getWidth();
+        }
+        
+        int x = (int) (position * SCALE) + 20;
         int width = (int) (d.getWidth() * SCALE);
         int height = (int) (d.getHeight() * SCALE);
         int y = 20 + (int) (room.getHeight() * SCALE) - height;
@@ -256,7 +264,15 @@ public class ImageVisualizer implements Visualizer {
     }
 
     private void drawWindowOnWall(Graphics2D g, Window w) {
-        int x = (int) (w.getPosition() * SCALE) + 20;
+        double wallWidth = (w.getWall() == Wall.NORTH || w.getWall() == Wall.SOUTH) ? room.getWidth() : room.getLength();
+        double position = w.getPosition();
+        
+        // Flip position for west wall to show from inside perspective
+        if (w.getWall() == Wall.WEST) {
+            position = wallWidth - w.getPosition() - w.getWidth();
+        }
+        
+        int x = (int) (position * SCALE) + 20;
         int width = (int) (w.getWidth() * SCALE);
         int height = (int) (w.getHeight() * SCALE);
         int bottomHeight = (int) (w.getBottomHeight() * SCALE);
@@ -318,8 +334,10 @@ public class ImageVisualizer implements Visualizer {
             case SOUTH:
                 return f.getX();
             case EAST:
-            case WEST:
                 return f.getY();
+            case WEST:
+                // Flip the coordinate for west wall to show from inside perspective
+                return room.getLength() - (f.getY() + f.getLength());
             default:
                 return 0;
         }
